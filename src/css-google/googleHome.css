@@ -1,0 +1,10 @@
+.main-frame {
+  width: 100%;
+  height: 100rem;
+  background-color: rgba(32, 33, 36, 1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}

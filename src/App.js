@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import "./css-google/bottom.css";
+import './css-google/googleHome.css';
+import './css-google/search.css';
+import './css-google/navigation.css';
+import navContent from './js/navigation';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main-frame" id="main-frame">
+     <div className="navigation">
+      <navContent />
+     </div>
+     <div className='search'></div>
+     <footer className="bottom"></footer>
     </div>
   );
 }
