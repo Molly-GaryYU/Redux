@@ -10,20 +10,22 @@ import app6 from "../img/img-google/app6.png";
 
 let box=[];
 let appDisplay=[];
-let firstTimeToClike=true;
+let clikeTimes=0;
 
-export default function NavContent(){
+export default function NavContent({ninePointClikeOrNot,setNinePointClikeOrNot}){
   const [boxShow ,setBoxShow]=useState([]);
-  let [ninePointClikeOrNot,setNinePointClikeOrNot]=useState(false)
+  const [clikeTimes ,setClikeTimes]=useState(0);
     return (
     <nav className="navigation__nav">
-        <a className="navigation__nav--img" href="aaa" alt="">图片</a>
-                    <div onClick={DialogMoreApp(setBoxShow,setNinePointClikeOrNot)} className="navigation__nav--more " id="nine-point">
+        <a className="navigation__nav--img" href="/#" alt="">图片</a>
+                    <div onClick={()=>{
+                      DialogMoreApp(setBoxShow,setNinePointClikeOrNot);
+                    }} className="navigation__nav--more " id="nine-point">
                         <img className="navigation__nav--more__img" src={ninePoint} alt="" />
                     </div>
                     <div  id="navigation__nav__dialog" className="navigation__nav__dialog" style={{display:ninePointClikeOrNot?'block':'none'}}>
                         <div id="navigation__nav__dialog--display" className="navigation__nav__dialog--display">
-                            {boxShow}
+                            {ninePointClikeOrNot?boxShow:null}
                         </div>
                     </div>
                     <a className="navigation__nav--login__a navigation__nav--login">登录</a>
@@ -32,21 +34,27 @@ export default function NavContent(){
 }
 //点击时请求
  function DialogMoreApp(setBoxShow,setNinePointClikeOrNot){
-  if(firstTimeToClike){
+  // question1！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
+  if(clikeTimes===0){
+    //有数据，但是后端没写好请求的数据接口（系统重装了，idea需要重新破解，现在进不去了）
     fetch("http://localhost:8080/pages/back/goods/getGoods").then((result)=>{
-      forEachApps(result,setBoxShow,setNinePointClikeOrNot);
-      firstTimeToClike=false;
+      forEachApps(result,setBoxShow);
+      clikeTimes++;
+      console.log('fetch in');
     }).catch(()=>{
-      forEachApps(moreData,setBoxShow,setNinePointClikeOrNot);
-      firstTimeToClike=false;
+      forEachApps(moreData,setBoxShow);
+      clikeTimes++;
+      console.log('catch in')
     }
     );
+  }else{
+    console.log('ninepoint display change')
+   return 
   }
 }
 //组件间通信通过state（单机关闭搜索框）
 //大类（第一层遍历）
-function forEachApps(result,setBoxShow,setNinePointClikeOrNot){
-  setNinePointClikeOrNot(true);
+function forEachApps(result,setBoxShow){
     result.forEach((elem)=>{
     let appArray=Object.values(elem);
     let box_a=AppBox(appArray)
@@ -60,9 +68,8 @@ function forEachApps(result,setBoxShow,setNinePointClikeOrNot){
 function AppBox(appArray){
    appArray.forEach((row) =>{
     row.map((colume,i)=>{
-      console.log("i :",i)
       appDisplay.push(
-        <a className='navigation__nav__dialog--display--type--box' href='' key={colume.id}>
+        <a className='navigation__nav__dialog--display--type--box' href="/#" key={colume.id}>
           <div className='navigation__nav__dialog--display--type--box__div'>
             {colume.imgComponent}
           </div>
@@ -70,7 +77,6 @@ function AppBox(appArray){
         </a>)
     })
   })
-  console.log("appDisplay is",appDisplay)
   return (<div className="navigation__nav__dialog--display--type" >
     <div className='navigation__nav__dialog--display--type--child'>
        {appDisplay}</div></div>)
