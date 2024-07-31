@@ -11,10 +11,7 @@ import searchImg1 from '../img/img-google/serchImg1.png'
 import searchImg2 from '../img/img-google/searchImg2.png'
 
 let arraySigns=[];
-//foucsRightNow 输入框是否选中
-//inputFocusOrHover 输入框鼠标悬停
-//searchSigns 记录遍历标签组
-//inputOrNot 输入框是否输入了值
+
 export default function SearchContent({foucsRightNow,setFoucsRightNow,inputOrNot,setInputOrNot,inputFocusOrHover,setInputFocusOrHover}){
     const [searchSigns,setSearchSigns]=useState([]);
     

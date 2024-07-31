@@ -25,7 +25,7 @@ function App() {
         setNinePointClikeOrNot(false)
       }
       else if(dialog.contains(event.target)){
-        console.log("点击在抽屉")
+        console.log("点击在抽屉1")
         setFoucsRightNow(false)
         setNinePointClikeOrNot(!ninePointClikeOrNot)
         setInputOrNot(false)

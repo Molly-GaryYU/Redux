@@ -2,7 +2,7 @@ import '../css-google/bottom.css'
 
 export default function footerContainer(){
     return(
-        <footer class="bottom">
+    <footer class="bottom">
         <nav class="bottom--left">
           <a class="bottom__a">About Google</a>
           <a class="bottom__a">广告</a>
@@ -14,6 +14,6 @@ export default function footerContainer(){
           <a class="bottom__a">条款</a>
           <a class="bottom__a">设置</a>
         </nav>
-   </footer>
+    </footer>
     )
 }

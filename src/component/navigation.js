@@ -33,7 +33,7 @@ export default function NavContent({ninePointClikeOrNot,setNinePointClikeOrNot})
   );
 }
 //点击时请求
- function DialogMoreApp(setBoxShow,setNinePointClikeOrNot){
+ function DialogMoreApp(setBoxShow){
   // question1！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！！
   if(clikeTimes===0){
     //有数据，但是后端没写好请求的数据接口（系统重装了，idea需要重新破解，现在进不去了）
