@@ -6,16 +6,14 @@ import cameraImg  from '../img/img-google/picture.png'
 import hoverSearchImg from '../img/img-google/hoverSearch.png'
 import hoverMaiKeImg from '../img/img-google/hoverMaike.png'
 import hoverCameraImg  from '../img/img-google/hoverPicture.png'
-import { useState } from 'react'
+import { useState,userRef } from 'react'
 import searchImg1 from '../img/img-google/serchImg1.png'
 import searchImg2 from '../img/img-google/searchImg2.png'
 
 let arraySigns=[];
 
-export default function SearchContent({foucsRightNow,setFoucsRightNow,inputOrNot,setInputOrNot,inputFocusOrHover,setInputFocusOrHover}){
+export default function SearchContent({foucsRightNow,setFoucsRightNow,inputOrNot,setInputOrNot,inputFocusOrHover,setInputFocusOrHover,serchFrameElem}){
     const [searchSigns,setSearchSigns]=useState([]);
-    
-   
     return (
         <>
           <img className="search--logo__img" src={logo} alt="" />
@@ -29,20 +27,21 @@ export default function SearchContent({foucsRightNow,setFoucsRightNow,inputOrNot
                inputOrNot={inputOrNot}
                setSearchSigns={setSearchSigns}
                searchSigns={searchSigns}
+               serchFrameElem={serchFrameElem}
                ></SearchForm>
           </div>
         </>
     )
 }
-function SearchForm({inputFocusOrHover ,setInputFocusOrHover,setFoucsRightNow,foucsRightNow,setInputOrNot,inputOrNot,searchSigns,setSearchSigns}){
+function SearchForm({inputFocusOrHover ,setInputFocusOrHover,setFoucsRightNow,foucsRightNow,setInputOrNot,inputOrNot,searchSigns,setSearchSigns,serchFrameElem}){
     return(
-        <div id="serch--frame" className={inputFocusOrHover?'search--area__form search--area__form--background border--none':'search--area__form'}
+        <div ref={serchFrameElem} id="serch--frame" className={inputFocusOrHover?'search--area__form search--area__form--background border--none':'search--area__form'}
         onMouseLeave={()=>{if(foucsRightNow){
             console.log('do nothing')
         }else{
             setInputFocusOrHover(false)
         }
-    }}
+      }}
         onMouseEnter={()=>{
             if(foucsRightNow){
                 console.log('do nothing')
@@ -55,16 +54,14 @@ function SearchForm({inputFocusOrHover ,setInputFocusOrHover,setFoucsRightNow,fo
         }}
          >
            <SearchAreaFormTop inputFocusOrHover={inputFocusOrHover} setInputFocusOrHover={setInputFocusOrHover} setFoucsRightNow={setFoucsRightNow} setInputOrNot={setInputOrNot} setSearchSigns={setSearchSigns} ></SearchAreaFormTop >
-           <SearchAreaFormData 
-           inputOrNot={inputOrNot}  
-        
-           searchSigns={searchSigns}></SearchAreaFormData>
+           <SearchAreaFormData inputOrNot={inputOrNot}  searchSigns={searchSigns}></SearchAreaFormData>
         </div>
     )
 }
-
+//输入框
 function SearchAreaFormTop({inputFocusOrHover,setInputFocusOrHover,setFoucsRightNow,setInputOrNot,setSearchSigns}){
-    return(<div className="search--area__form--top">
+    return(
+    <div className="search--area__form--top">
         <div className="search--area__form--top__div">
             <div className="search--area__form--left ">
                 <img  className="search--area__form--left__img" src={inputFocusOrHover?hoverSearchImg:searchImg} alt="" />
@@ -77,7 +74,7 @@ function SearchAreaFormTop({inputFocusOrHover,setInputFocusOrHover,setFoucsRight
                     setInputOrNot(true);
                     setSearchSigns([]);
                     arraySigns=[];
-                    AddDataToSearchAreaFormData(setSearchSigns);
+                    // AddDataToSearchAreaFormData(setSearchSigns);
                 }}    
                     />
             </div>
@@ -85,24 +82,19 @@ function SearchAreaFormTop({inputFocusOrHover,setInputFocusOrHover,setFoucsRight
                 <img className="search--area__form--right--hidden search--area__form--right--hide"  src={deleteImg} alt="" />
                 <span className="search--area__form--right--line search--area__form--right--hide" id="search--area__form--right--line"></span>
                 <img  className={inputFocusOrHover?'search--button--searchimg':'search--area__form--right--maike'} src={inputFocusOrHover?hoverMaiKeImg:maiKeImg} alt="" />
-                <img  className="search--area__form--right--picture" src={inputFocusOrHover?hoverCameraImg:cameraImg} alt="" />
+                <img className={inputFocusOrHover?'search--area__form--right--picture search--area__form--right--picture--hover':'search--area__form--right--picture'}  src={inputFocusOrHover?hoverCameraImg:cameraImg} alt="" />
             </div>
         </div>
       </div>
         
     ) 
 }
+//输入框检索内容
 function SearchAreaFormData({inputOrNot,searchSigns}){
     return ( <>
          <div id="search--area--line" className={inputOrNot?'search--area--line':'search--area--line diaplay--none'} ></div>
          <div  className={inputOrNot?'search--area__form--data ':'search--area__form--data diaplay--none'}> 
-             {searchSigns}
-        </div>
-       </>)
-}
-//收缩内容遍历
-function AddDataToSearchAreaFormData(setSearchSigns){
-    searchData.forEach((item,index)=>{
+            {inputOrNot? searchData.map((item,index)=>{
         let containerClass='search--area__form--data--row--margin change search--area__form--data--row';
         let nameSpan
         let introduceSpan
@@ -118,7 +110,7 @@ function AddDataToSearchAreaFormData(setSearchSigns){
                         nameSpan='change'
                     introduceSpan='search--area__form--data--row__author change'
                 }
-                arraySigns.push(
+                return(
                     <div className={containerClass}>
                       {item.imgComponent}
                       <div className='search--area__form--data--row__div change'>
@@ -128,7 +120,7 @@ function AddDataToSearchAreaFormData(setSearchSigns){
                     </div>
                 )
             }else{
-                arraySigns.push(
+                return(
                     <div className={containerClass}>
                       {item.imgComponent}
                       <div className='search--area__form--data--row__div change'>
@@ -137,9 +129,50 @@ function AddDataToSearchAreaFormData(setSearchSigns){
                     </div>
                 )
             }
-            setSearchSigns(arraySigns) ;
-    })
+    }):null} 
+        </div>
+       </>)
 }
+//搜索内容遍历
+// function AddDataToSearchAreaFormData(setSearchSigns){
+//     searchData.forEach((item,index)=>{
+//         let containerClass='search--area__form--data--row--margin change search--area__form--data--row';
+//         let nameSpan
+//         let introduceSpan
+//         if(index===0){
+//             containerClass='search--area__form--data--row--first--row change search--area__form--data--row';
+//         }
+//             //没图片有作者
+//             if(item.introduceOrNot){
+//                 if(item.img){
+//                     nameSpan='search--area__form--data--row__span__none-img change'
+//                     introduceSpan='search--area__form--data--row__span__none-img search--area__form--data--row__author change'
+//                 }else{
+//                         nameSpan='change'
+//                     introduceSpan='search--area__form--data--row__author change'
+//                 }
+//                 arraySigns.push(
+//                     <div className={containerClass}>
+//                       {item.imgComponent}
+//                       <div className='search--area__form--data--row__div change'>
+//                             <span className={nameSpan}>{item.name}</span>
+//                             <span className={introduceSpan}>{item.introduce}</span>
+//                       </div>
+//                     </div>
+//                 )
+//             }else{
+//                 arraySigns.push(
+//                     <div className={containerClass}>
+//                       {item.imgComponent}
+//                       <div className='search--area__form--data--row__div change'>
+//                             <span className='search--area__form--data--row__span'>{item.name}</span>
+//                       </div>
+//                     </div>
+//                 )
+//             }
+//             setSearchSigns(arraySigns) ;
+//     })
+// }
 
 const searchData=[
     {name:"啊~",img:false,imgComponent: <img src={hoverSearchImg} className='search--area__form--data--row__nothing change' alt=''/>,introduce:"",introduceOrNot:false},

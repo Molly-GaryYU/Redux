@@ -113,11 +113,15 @@
 /* 整个滚动条 */
 .navigation__nav__dialog--display::-webkit-scrollbar {
   width: 7px;
+  padding-top: 20px;
+  margin-top: 20px;
 }
 /* 轨道 */
 ::-webkit-scrollbar-track {
   height: 50% ;
   display: none;
+  padding-top: 20px;
+  margin-top: 20px;
 }
 /* 箭头按钮 */
 ::-webkit-scrollbar-button {
@@ -127,6 +131,8 @@
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: rgb(78, 78, 78);
+  padding-top: 20px;
+  margin-top: 20px;
 }
 .navigation__nav__dialog--display--type--child {
   padding-top: 30px;

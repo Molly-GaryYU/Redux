@@ -5,7 +5,8 @@ import './css-google/navigation.css';
 import FooterContainer from './component/footerContainer.js'
 import NavContent from './component/navigation';
 import SearchContent  from './component/searchContent.js'
-import { useState } from "react";
+import { useState} from "react";
+import { useRef } from 'react';
 
 
 function App() {
@@ -13,23 +14,26 @@ function App() {
   const [inputOrNot ,setInputOrNot] =useState(false)
   const [ninePointClikeOrNot,setNinePointClikeOrNot]=useState(false)
   const [inputFocusOrHover ,setInputFocusOrHover] =useState(false)
+  const serchFrameElem=useRef(null);
+  const ninePoint=useRef(null);
+  const dialog=useRef(null);
   return (
     <div className="main-frame" id="main-frame" onClick={(event)=>{
-      const serchFrameElem=document.getElementById('serch--frame');
-      const ninePoint =document.getElementById('nine-point')
-      const dialog=document.getElementById('navigation__nav__dialog');
+      const serchFrameElemNode=serchFrameElem.current;
+      const ninePointNode =ninePoint.current;
+      const dialogNode=dialog.current;;
       console.log(event.target)
-      if(serchFrameElem.contains(event.target)){
+      if(serchFrameElemNode.contains(event.target)){
         console.log("点击在搜索框内");
         setFoucsRightNow(true)
         setNinePointClikeOrNot(false)
       }
-      else if(dialog.contains(event.target)){
+      else if(dialogNode.contains(event.target)){
         console.log("点击在抽屉1")
         setFoucsRightNow(false)
         setNinePointClikeOrNot(!ninePointClikeOrNot)
         setInputOrNot(false)
-      }else if(ninePoint.contains(event.target)){
+      }else if(ninePointNode.contains(event.target)){
         console.log("点击在抽屉按钮")
         setFoucsRightNow(false)
         setNinePointClikeOrNot(!ninePointClikeOrNot)
@@ -44,10 +48,16 @@ function App() {
       }
     }}>
      <div className="navigation">
-      <NavContent  ninePointClikeOrNot={ninePointClikeOrNot} setNinePointClikeOrNot={setNinePointClikeOrNot}/>
+      <NavContent  
+      ninePointClikeOrNot={ninePointClikeOrNot} 
+      setNinePointClikeOrNot={setNinePointClikeOrNot} 
+      ninePoint={ninePoint}
+      dialog={dialog}
+      />
      </div>
      <div className='search'>
        <SearchContent 
+       serchFrameElem={serchFrameElem}
        foucsRightNow={foucsRightNow} 
        setFoucsRightNow={setFoucsRightNow} 
        inputOrNot={inputOrNot} 
