@@ -4,69 +4,77 @@ import './css-google/search.css';
 import './css-google/navigation.css';
 import FooterContainer from './component/footerContainer.js'
 import NavContent from './component/navigation';
-import SearchContent  from './component/searchContent.js'
-import { useState} from "react";
-import { useRef } from 'react';
+import SearchContent from './component/searchContent.js'
+import { useState, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 
 function App() {
-  const [foucsRightNow ,setFoucsRightNow] =useState(false)
-  const [inputOrNot ,setInputOrNot] =useState(false)
-  const [ninePointClikeOrNot,setNinePointClikeOrNot]=useState(false)
-  const [inputFocusOrHover ,setInputFocusOrHover] =useState(false)
-  const serchFrameElem=useRef(null);
-  const ninePoint=useRef(null);
-  const dialog=useRef(null);
+  const dispatch = useDispatch();
+  const serchFrameElem = useRef(null);
+  const ninePoint = useRef(null);
+  const dialog = useRef(null);
+  const ninePointClikeOrNot = useSelector(state => state.ninePointClikeOrNot);
+  const foucsRightNowTurnFalse = () => {
+    dispatch({ type: 'CHANGE_FOCUS_RIGHT_NOW_TO_TRUE' })
+  }
+  const foucsRightNowTurnTure = () => {
+    dispatch({ type: 'CHANGE_FOCUS_RIGHT_NOW_TO_TRUE' })
+  }
+  const inputOrNotTurnFalse = () => {
+    dispatch({ type: 'CHANGE_INPUT_OR_NOT_TO_FALSE' })
+  }
+  const setInputFocusOrHoverToFalse = () => {
+    dispatch({ type: 'CHANGE_INPUT_OR_NOT_TO_FALSE' })
+  }
+  const ninePointClikeOrNotTurnFalse = () => {
+    dispatch({ type: 'CHANGE_NINE_POINT_CLICK_OR_NOT_TO_FALSE' })
+  }
+  const clickNinePoint = () => {
+    dispatch({ type: 'CHANGE_NINE_POINT', dialogOpenOrNot: ninePointClikeOrNot })
+  }
+
   return (
-    <div className="main-frame" id="main-frame" onClick={(event)=>{
-      const serchFrameElemNode=serchFrameElem.current;
-      const ninePointNode =ninePoint.current;
-      const dialogNode=dialog.current;;
-      console.log(event.target)
-      if(serchFrameElemNode.contains(event.target)){
+    <div className="main-frame" id="main-frame" onClick={(event) => {
+      const serchFrameElemNode = serchFrameElem.current;
+      const ninePointNode = ninePoint.current;
+      const dialogNode = dialog.current;
+      if (serchFrameElemNode.contains(event.target)) {
         console.log("点击在搜索框内");
-        setFoucsRightNow(true)
-        setNinePointClikeOrNot(false)
+        foucsRightNowTurnFalse();
+        ninePointClikeOrNotTurnFalse();
       }
-      else if(dialogNode.contains(event.target)){
-        console.log("点击在抽屉1")
-        setFoucsRightNow(false)
-        setNinePointClikeOrNot(!ninePointClikeOrNot)
-        setInputOrNot(false)
-      }else if(ninePointNode.contains(event.target)){
+      else if (dialogNode.contains(event.target)) {
+        console.log("点击在抽屉")
+        foucsRightNowTurnTure()
+        dispatch({ type: 'CHANGE_NINE_POINT' })
+        inputOrNotTurnFalse();
+      } else if (ninePointNode.contains(event.target)) {
         console.log("点击在抽屉按钮")
-        setFoucsRightNow(false)
-        setNinePointClikeOrNot(!ninePointClikeOrNot)
-        setInputOrNot(false)
+        foucsRightNowTurnTure();
+        clickNinePoint();
+        inputOrNotTurnFalse()
       }
-      else{
+      else {
         console.log("页面点击")
-        setFoucsRightNow(false)
-        setInputFocusOrHover(false)
-        setNinePointClikeOrNot(false)
-        setInputOrNot(false)
+        foucsRightNowTurnTure();
+        setInputFocusOrHoverToFalse();
+        ninePointClikeOrNotTurnFalse();
+        inputOrNotTurnFalse();
       }
     }}>
-     <div className="navigation">
-      <NavContent  
-      ninePointClikeOrNot={ninePointClikeOrNot} 
-      setNinePointClikeOrNot={setNinePointClikeOrNot} 
-      ninePoint={ninePoint}
-      dialog={dialog}
-      />
-     </div>
-     <div className='search'>
-       <SearchContent 
-       serchFrameElem={serchFrameElem}
-       foucsRightNow={foucsRightNow} 
-       setFoucsRightNow={setFoucsRightNow} 
-       inputOrNot={inputOrNot} 
-       setInputOrNot={setInputOrNot} 
-       inputFocusOrHover={inputFocusOrHover}
-       setInputFocusOrHover={setInputFocusOrHover}
-       />
-     </div>
-             <FooterContainer />  
+      <div className="navigation">
+        <NavContent
+          ninePoint={ninePoint}
+          dialog={dialog}
+        />
+      </div>
+      <div className='search'>
+        <SearchContent
+          serchFrameElem={serchFrameElem}
+        />
+      </div>
+      <FooterContainer />
     </div>
   );
 }
