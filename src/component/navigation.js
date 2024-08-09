@@ -31,27 +31,34 @@ export default function NavContent({ ninePoint, dialog }) {
       <div className="navigation__nav--more " id="nine-point" ref={ninePoint}>
         <img className="navigation__nav--more__img" src={ninePointImg} alt="" />
       </div>
-      <div ref={dialog} id="navigation__nav__dialog" className="navigation__nav__dialog" style={{ display: ninePointClikeOrNot ? 'block' : 'none' }}>
-        <div id="navigation__nav__dialog--display" className="navigation__nav__dialog--display">
-          {ninePointClikeOrNot ? dataResult.map((itemBlock) => {
-            return <div className="navigation__nav__dialog--display--type" >
-              <div className='navigation__nav__dialog--display--type--child'>
-                {itemBlock.map(({ name, imgComponent, id }) => {
-                  return <a className='navigation__nav__dialog--display--type--box' href="/#" key={id}>
-                    <div className='navigation__nav__dialog--display--type--box__div'>
-                      {imgComponent}
-                    </div>
-                    <span>{name}</span>
-                  </a>
-                })}
-              </div></div>
-          }) : null}
+      {!ninePointClikeOrNot || <Box dialog={dialog} ninePointClikeOrNot={ninePointClikeOrNot} dataResult={dataResult} />}
 
-        </div>
-      </div>
       <a className="navigation__nav--login__a navigation__nav--login">登录</a>
     </nav>
   );
+}
+
+function Box({ dialog, ninePointClikeOrNot, dataResult }) {
+  return (
+    <div ref={dialog} id="navigation__nav__dialog" className="navigation__nav__dialog">
+      <div id="navigation__nav__dialog--display" className="navigation__nav__dialog--display">
+        {ninePointClikeOrNot ? dataResult.map((itemBlock) => {
+          return <div className="navigation__nav__dialog--display--type" >
+            <div className='navigation__nav__dialog--display--type--child'>
+              {itemBlock.map(({ name, imgComponent, id }) => {
+                return <a className='navigation__nav__dialog--display--type--box' href="/#" key={id}>
+                  <div className='navigation__nav__dialog--display--type--box__div'>
+                    {imgComponent}
+                  </div>
+                  <span>{name}</span>
+                </a>
+              })}
+            </div></div>
+        }) : null}
+
+      </div>
+    </div>
+  )
 }
 
 const moreData = [[
